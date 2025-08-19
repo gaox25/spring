@@ -1,5 +1,7 @@
 package com.gaoxi.spring.test;
 
+import com.gaoxi.spring.bean.BookStore;
+import com.gaoxi.spring.bean.Emp;
 import com.gaoxi.spring.bean.Master;
 import com.gaoxi.spring.bean.Monster;
 import com.gaoxi.spring.service.MemberServiceImpl;
@@ -10,6 +12,22 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import java.io.File;
 
 public class SpringBeanTest {
+
+    //给属性进行级联赋值
+    @Test
+    public void setBeanByRelation() {
+        ApplicationContext ioc = new ClassPathXmlApplicationContext("beans.xml");
+        Emp emp = ioc.getBean("emp", Emp.class);
+        System.out.println(emp);
+    }
+
+    //使用util:list名称空间给属性赋值
+    @Test
+    public void setBeanByUtilList() {
+        ApplicationContext ioc = new ClassPathXmlApplicationContext("beans.xml");
+        BookStore bookStore = ioc.getBean("bookStore", BookStore.class);
+        System.out.println("bookStore:" + bookStore);
+    }
 
     //给集合数组属性进行赋值
     @Test
