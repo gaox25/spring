@@ -1,6 +1,7 @@
 package com.gaoxi.spring.test;
 
 import com.gaoxi.spring.bean.Monster;
+import com.gaoxi.spring.service.MemberServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -8,6 +9,47 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import java.io.File;
 
 public class SpringBeanTest {
+
+    //通过内部Bean来设置bean属性
+    @Test
+    public void setBeanByInnerBean() {
+        ApplicationContext ioc = new ClassPathXmlApplicationContext("beans.xml");
+        MemberServiceImpl memberServiceImpl = (MemberServiceImpl) ioc.getBean("memberService02");
+        memberServiceImpl.add();
+    }
+
+    //通过ref来设置bean属性
+    @Test
+    public void setBeanByRef() {
+        ApplicationContext ioc = new ClassPathXmlApplicationContext("beans.xml");
+        MemberServiceImpl memberServiceImpl = (MemberServiceImpl) ioc.getBean("memberService");
+        memberServiceImpl.add();
+    }
+
+    //演示通过Bean的类型来获取对象
+//    @Test
+//    public void getBeanByType() {
+//        ApplicationContext ioc = new ClassPathXmlApplicationContext("beans.xml");
+//        //直接传入一个Class对象/类型
+//        Monster monster = ioc.getBean(Monster.class);
+//        System.out.println("monster = " + monster);
+//    }
+    //演示通过指定构造器来设置属性，构造器设置的属性在bean.xml中
+    @Test
+    public void setBeanByConstructor() {
+        ApplicationContext ioc = new ClassPathXmlApplicationContext("beans.xml");
+        Object monster03 = ioc.getBean("monster03");
+        System.out.println("monster03 = " + monster03);
+    }
+
+    //通过p名称空间来设置属性
+    @Test
+    public void setBeanByPNameSpace() {
+        ApplicationContext ioc = new ClassPathXmlApplicationContext("beans.xml");
+        Object monster06 = ioc.getBean("monster06");
+        System.out.println("monster06 = " + monster06);
+    }
+
     @Test
     public void getMonster() {
         //1.创建容器ApplicationContext
