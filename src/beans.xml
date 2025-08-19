@@ -66,15 +66,15 @@
           p:name="红孩儿"
           p:skill="吐火"/>
 
-    <!-- 配置MemberDAOImpl对象 -->
-    <bean class="com.gaoxi.spring.dao.MemberDAOImpl" id="memberDAO"/>
-
     <!-- 配置MemberServiceImpl对象-使用内部bean -->
     <bean class="com.gaoxi.spring.service.MemberServiceImpl" id="memberService02">
         <property name="memberDAO">
             <bean class="com.gaoxi.spring.dao.MemberDAOImpl"/>
         </property>
     </bean>
+
+    <!-- 配置MemberDAOImpl对象 -->
+    <bean class="com.gaoxi.spring.dao.MemberDAOImpl" id="memberDAO"/>
 
     <!-- 配置MemberServiceImpl对象 -->
     <!--
@@ -243,4 +243,30 @@
         <property name="skill" value="蜇人"/>
     </bean>
     <bean id="monster13" class="com.gaoxi.spring.bean.Monster" parent="monster12"/>
+
+    <!--
+     1.测试bean的创建顺序
+     2.在默认情况下，bean创建的顺序是按照配置顺序来的
+     3.但是如果我们增加了depends-on="department01" 这时就会先创建id=department01的对象
+     -->
+    <bean id="student01" class="com.gaoxi.spring.bean.Student" depends-on="department01"/>
+    <bean id="department01" class="com.gaoxi.spring.bean.Department"/>
+
+    <!-- 配置Cat对象
+     1.默认情况下，scope这个属性，是单例singleton
+     2.即在ioc容器中，只会有一个这样的bean对象
+     3.当程序员执行getBean时，返回的是同一个对象
+     4.如果我们希望每次返回一个新的bean对象，则可以这样配置 scope="prototype"
+     5.如果bean的配置是scope="singleton" lazy-init="true"(默认是false)，这时ioc容器不会提前创建该对象，而是
+       当执行getBean方法的时候才会创建这个对象
+     6.通常情况下，lazy-init就使用默认值false，在开发看来，用空间换时间是值得的
+     7.当scope="prototype"时，lazy-init不管是true或者false，都是getBean时才创建对象
+     -->
+<!--    <bean id="cat" class="com.gaoxi.spring.bean.Cat" scope="singleton">-->
+    <!-- 如果是单例singleton，同时希望在getBean时才创建，可以指定懒加载lazy-init="true"(注意默认是false) -->
+    <bean id="cat" class="com.gaoxi.spring.bean.Cat" scope="singleton" lazy-init="false">
+<!--    <bean id="cat" class="com.gaoxi.spring.bean.Cat" scope="prototype" lazy-init="false">-->
+        <property name="id" value="100"/>
+        <property name="name" value="小花猫"/>
+    </bean>
 </beans>

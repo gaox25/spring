@@ -1,9 +1,6 @@
 package com.gaoxi.spring.test;
 
-import com.gaoxi.spring.bean.BookStore;
-import com.gaoxi.spring.bean.Emp;
-import com.gaoxi.spring.bean.Master;
-import com.gaoxi.spring.bean.Monster;
+import com.gaoxi.spring.bean.*;
 import com.gaoxi.spring.service.MemberServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.ApplicationContext;
@@ -12,6 +9,24 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import java.io.File;
 
 public class SpringBeanTest {
+
+    //测试Scope
+    @Test
+    public void testBeanScope() {
+        ApplicationContext ioc = new ClassPathXmlApplicationContext("beans.xml");
+        Cat cat1 = ioc.getBean("cat", Cat.class);
+        Cat cat2 = ioc.getBean("cat", Cat.class);
+        Cat cat3 = ioc.getBean("cat", Cat.class);
+        System.out.println(cat1);
+        System.out.println(cat2);
+        System.out.println(cat3);
+    }
+
+    //测试bean创建顺序
+    @Test
+    public void testBeanByCreate() {
+        ApplicationContext ioc = new ClassPathXmlApplicationContext("beans.xml");
+    }
 
     //配置bean通过继承(extends)
     @Test
