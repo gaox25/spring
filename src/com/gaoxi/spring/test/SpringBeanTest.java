@@ -13,6 +13,16 @@ import java.io.File;
 
 public class SpringBeanTest {
 
+    //通过静态工厂来获取bean
+    @Test
+    public void getBeanByStaticFactory() {
+        ApplicationContext ioc = new ClassPathXmlApplicationContext("beans.xml");
+        Monster my_monster01 = ioc.getBean("my_monster01", Monster.class);
+        Monster my_monster02 = ioc.getBean("my_monster01", Monster.class);
+        System.out.println("my_monster01=" + my_monster01);
+        System.out.println(my_monster02 == my_monster01);
+    }
+
     //给属性进行级联赋值
     @Test
     public void setBeanByRelation() {

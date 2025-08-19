@@ -188,4 +188,15 @@
         <!-- 底层会调dept对象的setName()方法设置name -->
         <property name="dept.name" value="Java开发部门"/>
     </bean>
+
+    <!--
+      配置monster对象，通过静态工厂获取
+      1.通过静态工厂获取/配置bean
+      2.class是静态工厂的全路径
+      3.factory-method 表示指定静态工厂类的哪个方法返回对象
+      4.<constructor-arg value="monster02"/> value是指定要返回静态工厂的哪个对象
+      -->
+    <bean id="my_monster01" class="com.gaoxi.spring.factory.MyStaticFactory" factory-method="getMonster">
+        <constructor-arg value="monster02"/>
+    </bean>
 </beans>
