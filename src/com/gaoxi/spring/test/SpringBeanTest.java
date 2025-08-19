@@ -13,6 +13,16 @@ import java.io.File;
 
 public class SpringBeanTest {
 
+    //通过实例工厂来获取bean
+    @Test
+    public void getBeanByInstanceFactory() {
+        ApplicationContext ioc = new ClassPathXmlApplicationContext("beans.xml");
+        Monster my_monster02 = ioc.getBean("my_monster02", Monster.class);
+        Monster my_monster03 = ioc.getBean("my_monster02", Monster.class);
+        System.out.println("my_monster02=" + my_monster02);
+        System.out.println(my_monster02 == my_monster03);
+    }
+
     //通过静态工厂来获取bean
     @Test
     public void getBeanByStaticFactory() {

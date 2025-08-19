@@ -199,4 +199,16 @@
     <bean id="my_monster01" class="com.gaoxi.spring.factory.MyStaticFactory" factory-method="getMonster">
         <constructor-arg value="monster02"/>
     </bean>
+
+    <!-- 配置实例工厂对象 -->
+    <bean class="com.gaoxi.spring.factory.MyInstanceFactory" id="myInstanceFactory"/>
+    <!--
+     配置monster对象，通过实例工厂
+     1.factory-bean 指定使用哪个实例工厂对象返回bean
+     2.factory-method 指定使用实例工厂对象的哪个方法返回bean
+     3.constructor-arg 指定获取到实例工厂中的哪个monster对象
+     -->
+    <bean id="my_monster02" factory-bean="myInstanceFactory" factory-method="getMonster">
+        <constructor-arg value="monster03"/>
+    </bean>
 </beans>

@@ -10,7 +10,7 @@ public class Monster {
     }
 
     public Monster(Integer monsterId, String name, String skill) {
-        System.out.println("全参构造器被调用了");
+        //System.out.println("全参构造器被调用了");
         this.monsterId = monsterId;
         this.name = name;
         this.skill = skill;
