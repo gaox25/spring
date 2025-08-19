@@ -1,5 +1,6 @@
 package com.gaoxi.spring.test;
 
+import com.gaoxi.spring.bean.Master;
 import com.gaoxi.spring.bean.Monster;
 import com.gaoxi.spring.service.MemberServiceImpl;
 import org.junit.jupiter.api.Test;
@@ -9,6 +10,14 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import java.io.File;
 
 public class SpringBeanTest {
+
+    //给集合数组属性进行赋值
+    @Test
+    public void setBeanByCollection() {
+        ApplicationContext ioc = new ClassPathXmlApplicationContext("beans.xml");
+        Master master = ioc.getBean("master", Master.class);
+        System.out.println(master);
+    }
 
     //通过内部Bean来设置bean属性
     @Test
