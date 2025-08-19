@@ -13,6 +13,26 @@ import java.io.File;
 
 public class SpringBeanTest {
 
+    //配置bean通过继承(extends)
+    @Test
+    public void getBeanByExtends() {
+        ApplicationContext ioc = new ClassPathXmlApplicationContext("beans.xml");
+        Monster monster11 = ioc.getBean("monster11", Monster.class);
+        System.out.println("monster11 = " + monster11);
+//        Monster monster12 = ioc.getBean("monster12", Monster.class);
+//        System.out.println("monster12 = " + monster12);
+        Monster monster13 = ioc.getBean("monster13", Monster.class);
+        System.out.println("monster13 = " + monster13);
+    }
+
+    //通过FactoryBean获取bean
+    @Test
+    public void getBeanByFactoryBean() {
+        ApplicationContext ioc = new ClassPathXmlApplicationContext("beans.xml");
+        Monster my_monster05 = ioc.getBean("my_monster05", Monster.class);
+        System.out.println(my_monster05);
+    }
+
     //通过实例工厂来获取bean
     @Test
     public void getBeanByInstanceFactory() {

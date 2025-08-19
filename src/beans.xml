@@ -211,4 +211,36 @@
     <bean id="my_monster02" factory-bean="myInstanceFactory" factory-method="getMonster">
         <constructor-arg value="monster03"/>
     </bean>
+
+    <!-- 配置Monster对象，通过FactoryBean获取
+     1.class指定使用的FactoryBean
+     2.key表示就是MyFactoryBean的属性key
+     3.value就是要获取的对象对应的key
+     -->
+    <bean id="my_monster05" class="com.gaoxi.spring.factory.MyFactoryBean">
+        <property name="key" value="monster04"/>
+    </bean>
+
+    <!-- 配置Monster对象 -->
+    <bean id="monster10" class="com.gaoxi.spring.bean.Monster">
+        <property name="monsterId" value="10"/>
+        <property name="name" value="蜈蚣精"/>
+        <property name="skill" value="蜇人"/>
+    </bean>
+    <!-- 在配置一个Monster对象，但有要求
+     1.配置的这个Monster对象的属性值和 id = "monster10"对象属性一样
+     2.使用parent属性，使用Bean配置信息重用，指定当前这个配置的对象的属性值从id=monster10的对象
+     -->
+    <bean id="monster11" class="com.gaoxi.spring.bean.Monster" parent="monster10"/>
+
+    <!--
+      1.如果bean指定了abstract="true" 表示该bean对象，适用于被继承
+      2.本身这个bean就不能被获取/实例化了
+     -->
+    <bean id="monster12" class="com.gaoxi.spring.bean.Monster" abstract="true">
+        <property name="monsterId" value="10"/>
+        <property name="name" value="蜈蚣精"/>
+        <property name="skill" value="蜇人"/>
+    </bean>
+    <bean id="monster13" class="com.gaoxi.spring.bean.Monster" parent="monster12"/>
 </beans>
