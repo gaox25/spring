@@ -269,4 +269,16 @@
         <property name="id" value="100"/>
         <property name="name" value="小花猫"/>
     </bean>
+
+    <!--
+     配置House对象，演示整个Bean的生命周期
+     1.init-method="init" 指定bean的初始化方法，是在setter方法后执行
+     2.init方法执行的时机，由spring容器来控制
+     3.destroy-method="destory" 指定bean的销毁方法，在容器关闭的时候执行
+     4.destroy方法执行的时机，也是由spring容器来控制的
+     -->
+    <bean class="com.gaoxi.spring.bean.House" id="house"
+          init-method="init" destroy-method="destroy">
+        <property name="name" value="北京豪宅"/>
+    </bean>
 </beans>

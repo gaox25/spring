@@ -4,11 +4,26 @@ import com.gaoxi.spring.bean.*;
 import com.gaoxi.spring.service.MemberServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.io.File;
 
 public class SpringBeanTest {
+
+    //测试Bean的生命周期
+    @Test
+    public void testBeanLife() {
+        ApplicationContext ioc = new ClassPathXmlApplicationContext("beans.xml");
+        House house = ioc.getBean("house", House.class);
+        System.out.println("使用house=" + house);
+        //关闭ioc容器，以调用destroy方法
+        //1.ioc的编译类型是接口类型ApplicationContext，运行类型是ClassPathXmlApplicationContext
+        //2.因为ClassPathXmlApplication实现了接口ConfigurableApplicationContext
+        //3.ConfigurableApplicationContext是有close方法的
+        //4.所以将ioc转成ClassPathXmlApplicationContext(向下转型)，再调用close即可
+        ((ClassPathXmlApplicationContext)ioc).close();
+    }
 
     //测试Scope
     @Test
