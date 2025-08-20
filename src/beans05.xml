@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd  http://www.springframework.org/schema/util
+        http://www.springframework.org/schema/util/spring-util.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+    <!-- 这是一个容器配置文件 -->
+    <!-- 配置容器要扫描的包
+     1.component-scan 要对指定的包下的类(前提是要有对应注解)进行扫描，并创建对象到容器中
+     2.base-package 指定要扫描的包是哪一个
+     3.含义是当Spring容器创建/初始化时，就会扫描com.gaoxi.spring.component包下的所有有
+       @Controller @Service @Repository @Component注解的类，将其实例化，生成对象，放
+       入ioc容器
+     4.需要导入spring-aop-5.3.8.jar
+     5.如果要扫描com.gaoxi.spring包下的所有子包的类，使用通配符*即可
+       如果没有*，也会递归扫描子包
+     6.resource-pattern="User*.class" 表示只扫描com.gaoxi.spring.component和他子包下的User打头的类
+     -->
+<!--    <context:component-scan base-package="com.gaoxi.spring.component" resource-pattern="User*.class"/>-->
+    <context:component-scan base-package="com.gaoxi.spring.component"/>
+
+    <!-- 需求，如果希望排除某个包/子包下的某种类型的注解，可以通过exclude-filter来指定
+     1.context:exclude-filter 指定要排除哪些类
+     2.type 指定排除的类型annotation表示按照注解来排除
+     3.指定要排除的注解的全路径：org.springframework.stereotype.Service
+     -->
+<!--    <context:component-scan base-package="com.gaoxi.spring.component">-->
+<!--        &lt;!&ndash; 不扫描Service注解的bean &ndash;&gt;-->
+<!--        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Service"/>-->
+<!--    </context:component-scan>-->
+    <!-- 需求：如果希望按照自己的规则，来扫描包/子包下的某些注解，可以通过include-filter来指定
+     1.use-default-filters="false" 关闭默认扫描机制
+     2.context:include-filter 表示要去扫描哪些类
+     3.type="annotation" 按照注释方式来扫描/过滤
+     4.指定要扫描的注解的全路径：org.springframework.stereotype.Service
+     -->
+    <!-- 关闭默认扫描机制 -->
+<!--    <context:component-scan base-package="com.gaoxi.spring.component" use-default-filters="false">-->
+<!--        &lt;!&ndash; 要扫描Service注解的bean &ndash;&gt;-->
+<!--        <context:include-filter type="annotation" expression="org.springframework.stereotype.Service"/>-->
+<!--    </context:component-scan>-->
+</beans>

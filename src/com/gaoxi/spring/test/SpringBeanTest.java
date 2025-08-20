@@ -1,6 +1,11 @@
 package com.gaoxi.spring.test;
 
 import com.gaoxi.spring.bean.*;
+import com.gaoxi.spring.component.MyComponent;
+import com.gaoxi.spring.component.UserAction;
+import com.gaoxi.spring.component.UserDao;
+import com.gaoxi.spring.component.UserService;
+import com.gaoxi.spring.component.t.Piggy;
 import com.gaoxi.spring.service.MemberServiceImpl;
 import com.gaoxi.spring.web.OrderAction;
 import org.junit.jupiter.api.Test;
@@ -11,6 +16,27 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import java.io.File;
 @SuppressWarnings({"all"})
 public class SpringBeanTest {
+    //通过注解来配置bean
+    @Test
+    public void setBeanByAnnotation() {
+        ApplicationContext ioc = new ClassPathXmlApplicationContext("beans05.xml");
+        //按照类型从容器中获取对象
+        UserDao userDao = ioc.getBean(UserDao.class);
+        UserService userService = ioc.getBean(UserService.class);
+        UserAction userAction = ioc.getBean(UserAction.class);
+        MyComponent myComponent = ioc.getBean(MyComponent.class);
+        System.out.println(userDao);
+        System.out.println(userAction);
+        System.out.println(userService);
+        System.out.println(myComponent);
+        Piggy piggy = ioc.getBean(Piggy.class);
+        System.out.println(piggy);
+        //在默认情况下，注解标识的类创建对象后，在容器中，id为类名的首字母小写
+        //也可以在类的注解中添加value属性，作为bean id
+        Object myComponent1 = ioc.getBean("component1");
+        System.out.println(myComponent1);
+        System.out.println("ok");
+    }
 
     //测试通过Spring EL表达式对属性赋值
     @Test
