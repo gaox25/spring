@@ -5,12 +5,10 @@ import com.gaoxi.spring.component.MyComponent;
 import com.gaoxi.spring.component.UserAction;
 import com.gaoxi.spring.component.UserDao;
 import com.gaoxi.spring.component.UserService;
-import com.gaoxi.spring.component.t.Piggy;
 import com.gaoxi.spring.service.MemberServiceImpl;
 import com.gaoxi.spring.web.OrderAction;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.io.File;
@@ -29,8 +27,6 @@ public class SpringBeanTest {
         System.out.println(userAction);
         System.out.println(userService);
         System.out.println(myComponent);
-        Piggy piggy = ioc.getBean(Piggy.class);
-        System.out.println(piggy);
         //在默认情况下，注解标识的类创建对象后，在容器中，id为类名的首字母小写
         //也可以在类的注解中添加value属性，作为bean id
         Object myComponent1 = ioc.getBean("component1");
