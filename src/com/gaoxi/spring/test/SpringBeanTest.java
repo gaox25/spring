@@ -8,8 +8,17 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.io.File;
-
+@SuppressWarnings({"all"})
 public class SpringBeanTest {
+
+    //测试bean后置处理器
+    @Test
+    public void beanPostProcessor() {
+        ApplicationContext ioc = new ClassPathXmlApplicationContext("beans02.xml");
+        House house = ioc.getBean("house", House.class);
+        System.out.println("使用house,house = " + house);
+        ((ClassPathXmlApplicationContext)ioc).close();
+    }
 
     //测试Bean的生命周期
     @Test
