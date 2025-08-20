@@ -11,6 +11,14 @@ import java.io.File;
 @SuppressWarnings({"all"})
 public class SpringBeanTest {
 
+    //测试属性文件给bean属性赋值
+    @Test
+    public void setBeanByFile() {
+        ApplicationContext ioc = new ClassPathXmlApplicationContext("beans03.xml");
+        Monster monster1000 = ioc.getBean("monster1000", Monster.class);
+        System.out.println("monster1000 = " + monster1000);
+    }
+
     //测试bean后置处理器
     @Test
     public void beanPostProcessor() {

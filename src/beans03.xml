@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd  http://www.springframework.org/schema/util
+        http://www.springframework.org/schema/util/spring-util.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+    <!-- 这是一个容器配置文件 -->
+    <!-- 指定属性文件
+     1.location 表示指定属性文件的位置
+     2.需要带上classpath:后面再写文件名
+     3.属性文件中如果有中文，需要将其转换为unicode编码
+     -->
+    <context:property-placeholder location="classpath:my.properties" />
+    <!-- 配置Monster对象
+     1.通过属性文件my.properties给monster对象的属性赋值
+     2.这时属性值通过${属性名}
+     3.这里说的属性名就是my.properties中的k-v中的k
+     -->
+    <bean class="com.gaoxi.spring.bean.Monster" id="monster1000">
+        <property name="monsterId" value="${monsterId}"/>
+        <property name="skill" value="${skill}"/>
+        <property name="name" value="${name}"/>
+    </bean>
+</beans>
