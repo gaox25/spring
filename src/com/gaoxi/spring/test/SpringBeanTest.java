@@ -12,6 +12,14 @@ import java.io.File;
 @SuppressWarnings({"all"})
 public class SpringBeanTest {
 
+    //测试通过Spring EL表达式对属性赋值
+    @Test
+    public void setBeanBySpel() {
+        ApplicationContext ioc = new ClassPathXmlApplicationContext("beans04.xml");
+        SpELBean spELBean = ioc.getBean("spELBean", SpELBean.class);
+        System.out.println("spELBean = " + spELBean);
+    }
+
     //测试自动装配对Bean属性赋值
     @Test
     public void setBeanByAutowire() {
