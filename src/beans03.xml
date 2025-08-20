@@ -22,4 +22,30 @@
         <property name="skill" value="${skill}"/>
         <property name="name" value="${name}"/>
     </bean>
+
+    <!-- 自动装配Bean -->
+    <!-- 配置OrderDao对象 -->
+    <bean class="com.gaoxi.spring.dao.OrderDao" id="orderDao"/>
+    <!-- 配置OrderService对象
+     1.属性autowire = "byType" 表示在创建OrderService对象时，通过类型的方式给对象属性自动完成一个赋值/引用
+     2.比如OrderService有private OrderDao orderDao
+     3.就会在容器中去找有没有一个OrderDao类型对象
+     4.如果有，就会自动的装配，如果是按照byType方式来装配，这个容器中，就不能有两个或两个以上的类型对象
+       否则会报错
+     5.如果对象没有属性，autowire就没有必要写
+     6.其他类推
+     7.如果autowire="byName" 表示通过名字完成自动装配
+     8.比如autowire="byName" class="com.gaoxi.spring.service.OrderService"
+       Spring容器会执行以下步骤
+       (1).先看OrderService属性private OrderDao orderDao
+       (2).再根据这个属性的SetXxx方法的xxx找对象id
+       (3).public void setOrderDao() 就会找id=orderDao对象进行自动装配
+       (4).如果没有就装配失败
+
+     -->
+<!--    <bean autowire="byType" class="com.gaoxi.spring.service.OrderService" id="orderService"/>-->
+    <bean autowire="byName" class="com.gaoxi.spring.service.OrderService" id="orderService2"/>
+    <!-- 配置OrderAction -->
+<!--    <bean autowire="byType" class="com.gaoxi.spring.web.OrderAction" id="orderAction"/>-->
+    <bean autowire="byName" class="com.gaoxi.spring.web.OrderAction" id="orderAction"/>
 </beans>

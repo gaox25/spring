@@ -2,6 +2,7 @@ package com.gaoxi.spring.test;
 
 import com.gaoxi.spring.bean.*;
 import com.gaoxi.spring.service.MemberServiceImpl;
+import com.gaoxi.spring.web.OrderAction;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -10,6 +11,19 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import java.io.File;
 @SuppressWarnings({"all"})
 public class SpringBeanTest {
+
+    //测试自动装配对Bean属性赋值
+    @Test
+    public void setBeanByAutowire() {
+        ApplicationContext ioc = new ClassPathXmlApplicationContext("beans03.xml");
+        OrderAction orderAction = ioc.getBean("orderAction", OrderAction.class);
+        System.out.println("orderAction = " + orderAction);
+        //验证了是否自动装配了AutoService
+        System.out.println(orderAction.getOrderService());
+        //验证了是否自动装配了AutoDao
+        System.out.println(orderAction.getOrderService().getOrderDao());
+        orderAction.getOrderService().getOrderDao().saveOrder();
+    }
 
     //测试属性文件给bean属性赋值
     @Test
