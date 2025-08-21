@@ -14,6 +14,21 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import java.io.File;
 @SuppressWarnings({"all"})
 public class SpringBeanTest {
+
+    //通过注解来配置Bean
+    @Test
+    public void setProByAutowired() {
+        ApplicationContext ioc = new ClassPathXmlApplicationContext("beans06.xml");
+        UserService userService = ioc.getBean("userService", UserService.class);
+        UserService userService200 = ioc.getBean("userService200", UserService.class);
+        UserService userService300 = ioc.getBean("userService300", UserService.class);
+        System.out.println("ioc容器中的userService=" + userService);
+        System.out.println("ioc容器中的userService200=" + userService200);
+        System.out.println("ioc容器中的userService300=" + userService300);
+        UserAction userAction = ioc.getBean("userAction", UserAction.class);
+        userAction.sayOk();
+    }
+
     //通过注解来配置bean
     @Test
     public void setBeanByAnnotation() {
