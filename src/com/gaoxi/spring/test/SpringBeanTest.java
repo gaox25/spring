@@ -5,6 +5,7 @@ import com.gaoxi.spring.component.MyComponent;
 import com.gaoxi.spring.component.UserAction;
 import com.gaoxi.spring.component.UserDao;
 import com.gaoxi.spring.component.UserService;
+import com.gaoxi.spring.depinjection.PhoneService;
 import com.gaoxi.spring.service.MemberServiceImpl;
 import com.gaoxi.spring.web.OrderAction;
 import org.junit.jupiter.api.Test;
@@ -14,6 +15,14 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import java.io.File;
 @SuppressWarnings({"all"})
 public class SpringBeanTest {
+
+    //通过泛型依赖来配置Bean的属性
+    @Test
+    public void setProByDependencyInjection() {
+        ApplicationContext ioc = new ClassPathXmlApplicationContext("beans07.xml");
+        PhoneService phoneService = ioc.getBean("phoneService", PhoneService.class);
+        phoneService.save();
+    }
 
     //通过注解来配置Bean
     @Test
