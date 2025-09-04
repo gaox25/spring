@@ -57,13 +57,26 @@ public class SmartAnimalAspect {
         System.out.println("切面类showFinallyEndLog()-方法最终执行完毕-日志-方法名-" + signature.getName());
     }
 
-    @Before(value = "execution(public void com.gaoxi.spring.aop.aspectj.*.work())")
-    public void beforeWork() {
+//    @Before(value = "execution(public void com.gaoxi.spring.aop.aspectj.*.work())")
+//    public void beforeWork() {
+//        System.out.println("work()方法前置");
+//    }
+
+    //切入接口方法前，所有实现了UsbInterface接口的类，执行work方法前，都会执行该切面类方法
+    @Before(value = "execution(public void com.gaoxi.spring.aop.aspectj.UsbInterface.work())")
+    public void beforeWork(JoinPoint joinPoint) {
         System.out.println("work()方法前置");
     }
 
-    @After(value = "execution(* com.gaoxi.spring.aop.aspectj.*.work())")
-    public void afterWork() {
+    @After(value = "execution(* com.gaoxi.spring.aop.aspectj.*.*(..))")
+    public void afterWork(JoinPoint joinPoint) {
         System.out.println("work()方法后置");
+    }
+
+    //前置通知，切入没有实现接口的类Car的方法
+    @Before(value = "execution(public void Car.run())")
+    public void ok(JoinPoint joinPoint) {
+        Signature signature = joinPoint.getSignature();
+        System.out.println("切面类的ok1()-执行的目标方法-" + signature.getName());
     }
 }

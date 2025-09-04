@@ -16,4 +16,14 @@ public class AopAspectjTest {
         System.out.println("=================");
         smartAnimalable.getSub(10, 20);
     }
+
+    @Test
+    public void test3() {
+        ApplicationContext ioc = new ClassPathXmlApplicationContext("beans08.xml");
+        //Car bean = (Car) ioc.getBean("car");
+        //此时car对象， 仍然是一个代理对象
+        Car car = ioc.getBean(Car.class);
+        System.out.println("car的运行类型" + car.getClass());//是cglib
+        car.run();
+    }
 }
