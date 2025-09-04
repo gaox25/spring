@@ -1,19 +1,20 @@
 package com.gaoxi.spring.aop.aspectj;
 
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.*;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-import java.lang.reflect.Method;
+import java.util.Arrays;
+import java.util.List;
 
 //切面类
 @Aspect //表示是一个切面类，底层切面编程的支撑是动态代理+反射+动态绑定
-@Order(value= 2) //表示该切面类执行的顺序，这个值越小，优先级越高
-@Component //会将SmartAnimalAspect注入Spring容器
-public class SmartAnimalAspect {
-
+@Order(value = 3)
+@Component //会将SmartAnimalAspect2注入Spring容器
+public class SmartAnimalAspect3 {
     //定义一个切入点，在后面使用时可以直接引用，这样就提高了复用性
     @Pointcut(value = "execution(public float com.gaoxi.spring.aop.aspectj.SmartDog.getSum(float, float))")
     public void myPointCut() {
@@ -39,7 +40,7 @@ public class SmartAnimalAspect {
     //使用showBeginLog比较适合
     public void showBeginLog(JoinPoint joinPoint) {
         //通过连接点对象，来获取方法签名
-        System.out.println("SmartAnimalAspect--使用myPointCut()");
+        System.out.println("SmartAnimalAspect3--使用myPointCut()");
         System.out.println("切面类SmartAnimalAspect方法showBeginLog()");
         System.out.println("方法签名 = " + joinPoint.getSignature());
         System.out.println("方法参数 = " + joinPoint.getArgs());
@@ -59,7 +60,7 @@ public class SmartAnimalAspect {
     //public void f2(JoinPoint joinPoint) {
     public void showSuccessEndLog(JoinPoint joinPoint, Object res) {
         Signature signature = joinPoint.getSignature();
-        System.out.println("SmartAnimalAspect--切面类showSuccessEndLog()-方法执行正常结束-日志-方法名-" + signature.getName());//从AOP看，也是一个横切关注点-返回通知
+        System.out.println("SmartAnimalAspect3--切面类showSuccessEndLog()-方法执行正常结束-日志-方法名-" + signature.getName());//从AOP看，也是一个横切关注点-返回通知
         System.out.println("目标方法返回的结果为：" + res.toString());
     }
 
@@ -70,7 +71,7 @@ public class SmartAnimalAspect {
     //public void f3(JoinPoint joinPoint) {
     public void showExceptionEndLog(JoinPoint joinPoint, Object throwable) {
         Signature signature = joinPoint.getSignature();
-        System.out.println("SmartAnimalAspect--切面类showExceptionEndLog()-方法执行异常-日志-方法名-" + signature.getName());
+        System.out.println("SmartAnimalAspect3--切面类showExceptionEndLog()-方法执行异常-日志-方法名-" + signature.getName());
         System.out.println("抛出的异常为：" + throwable.toString());
     }
 
@@ -81,58 +82,7 @@ public class SmartAnimalAspect {
     //public void f4(JoinPoint joinPoint) {
     public void showFinallyEndLog(JoinPoint joinPoint) {
         Signature signature = joinPoint.getSignature();
-        System.out.println("SmartAnimalAspect--切面类showFinallyEndLog()-方法最终执行完毕-日志-方法名-" + signature.getName());
+        System.out.println("SmartAnimalAspect3--切面类showFinallyEndLog()-方法最终执行完毕-日志-方法名-" + signature.getName());
     }
 
-//    @Before(value = "execution(public void com.gaoxi.spring.aop.aspectj.*.work())")
-//    public void beforeWork() {
-//        System.out.println("work()方法前置");
-//    }
-
-    //切入接口方法前，所有实现了UsbInterface接口的类，执行work方法前，都会执行该切面类方法
-    @Before(value = "execution(public void com.gaoxi.spring.aop.aspectj.UsbInterface.work())")
-    public void beforeWork(JoinPoint joinPoint) {
-        System.out.println("work()方法前置");
-    }
-
-    @After(value = "execution(* com.gaoxi.spring.aop.aspectj.UsbInterface.work())")
-    public void afterWork(JoinPoint joinPoint) {
-        System.out.println("work()方法后置");
-    }
-
-    //异常通知
-    @AfterThrowing(value = "execution(public void com.gaoxi.spring.aop.aspectj.UsbInterface.work())")
-    public void ok2(JoinPoint joinPoint) {
-        Signature signature = joinPoint.getSignature();
-        System.out.println("切面类的ok2()-执行的目标方法-" + signature.getName());
-    }
-    //返回结果通知
-    @AfterReturning(value = "execution(public void com.gaoxi.spring.aop.aspectj.UsbInterface.work())")
-    public void ok3(JoinPoint joinPoint) {
-        Signature signature = joinPoint.getSignature();
-        System.out.println("切面类的ok3()-执行的目标方法-" + signature.getName());
-    }
-    //最终结束通知
-    @After(value = "execution(public void com.gaoxi.spring.aop.aspectj.UsbInterface.work())")
-    public void ok4(JoinPoint joinPoint) {
-        Signature signature = joinPoint.getSignature();
-        System.out.println("切面类的ok4()-执行的目标方法-" + signature.getName());
-    }
-
-    //前置通知，切入没有实现接口的类Car的方法
-    @Before(value = "execution(public void Car.run())")
-    public void ok1(JoinPoint joinPoint) {
-        Signature signature = joinPoint.getSignature();
-        System.out.println("切面类的ok1()-执行的目标方法-" + signature.getName());
-    }
-
-    @After(value = "execution(public void Car.run())")
-    public void ok5(JoinPoint joinPoint) {
-        //通过JoinPoint可以获取到调用方法的签名
-        Signature signature = joinPoint.getSignature();
-        System.out.println("切面类的ok5()-执行的目标方法-" + signature.getName());
-        System.out.println("目标方法名：" + signature.getName());
-        System.out.println("类名：" + signature.getDeclaringType().getSimpleName());
-        System.out.println("目标方法的目标修饰符：" + signature.getModifiers());
-    }
 }

@@ -13,9 +13,10 @@ public class AopAspectjTest {
         SmartAnimalable smartAnimalable = ioc.getBean(SmartAnimalable.class);
         smartAnimalable.getSum(10, 20);
         System.out.println("smartAnimalable的运行类型为：" + smartAnimalable.getClass());
-        System.out.println("=================");
-        smartAnimalable.getSub(10, 20);
+//        System.out.println("=================");
+//        smartAnimalable.getSub(10, 20);
 //        System.out.println("======环绕通知======");
+//        System.out.println("======演示切面类执行顺序======");
 //        smartAnimalable.getMul(10, 2);
     }
 

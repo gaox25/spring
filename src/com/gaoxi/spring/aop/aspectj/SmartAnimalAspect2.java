@@ -4,6 +4,7 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.*;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -30,17 +31,17 @@ public class SmartAnimalAspect2 {
             //1.相当于前置通知完成的事情 @Before
             Object[] args = joinPoint.getArgs();
             List<Object> list = Arrays.asList(args);
-            System.out.println("AOP环绕通知--" + methodName + "方法开始了--参数有：" + list);
+            System.out.println("SmartAnimalAspect2-AOP环绕通知--" + methodName + "方法开始了--参数有：" + list);
             //在环绕通知中一定要通过joinPoint.proceed()来执行目标方法
             result = joinPoint.proceed();
             //2.相当于返回通知完成的事情 @Before的returning
-            System.out.println("AOP环绕通知" + methodName + "方法结束了--结果是：" + result);
+            System.out.println("SmartAnimalAspect2-AOP环绕通知" + methodName + "方法结束了--结果是：" + result);
         } catch (Throwable throwable) {
             //3.相当于异常通知完成的事情 @AfterThrowing
-            System.out.println("AOP环绕通知" + methodName + "方法抛异常了--异常对象：" + throwable);
+            System.out.println("SmartAnimalAspect2-AOP环绕通知" + methodName + "方法抛异常了--异常对象：" + throwable);
         } finally {
             //4.相当于最终通知完成的事情 @After
-            System.out.println("AOP后置通知" + methodName + "方法最终结束了...");
+            System.out.println("SmartAnimalAspect2-AOP后置通知" + methodName + "方法最终结束了...");
         }
         return result;
     }
