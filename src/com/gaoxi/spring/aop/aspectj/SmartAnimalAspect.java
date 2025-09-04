@@ -34,19 +34,28 @@ public class SmartAnimalAspect {
     }
 
     //返回通知，即把f2()切入到目标对象方法正常执行完毕后的位置
-    @AfterReturning(value = "execution(public float com.gaoxi.spring.aop.aspectj.SmartDog.getSum(float, float))")
+    /*
+     分析：
+     1.如果希望把目标方法执行的结果，返回给切入方法
+     2.可以在@AfterReturning注解上增加一个属性returning，例如returning = "res"
+     3.同时在切入方法的形参中增加Object res
+     4.注意returning = "res" 需要和Object res中的名称保持一致
+     */
+    @AfterReturning(value = "execution(public float com.gaoxi.spring.aop.aspectj.SmartDog.getSum(float, float))", returning = "res")
     //public void f2(JoinPoint joinPoint) {
-    public void showSuccessEndLog(JoinPoint joinPoint) {
+    public void showSuccessEndLog(JoinPoint joinPoint, Object res) {
         Signature signature = joinPoint.getSignature();
         System.out.println("切面类showSuccessEndLog()-方法执行正常结束-日志-方法名-" + signature.getName());//从AOP看，也是一个横切关注点-返回通知
+        System.out.println("目标方法返回的结果为：" + res.toString());
     }
 
     //异常通知，即把f3()方法切入到目标对象方法执行发生异常的catch{}
-    @AfterThrowing(value = "execution(public float com.gaoxi.spring.aop.aspectj.SmartDog.getSum(float, float))")
+    @AfterThrowing(value = "execution(public float com.gaoxi.spring.aop.aspectj.SmartDog.getSum(float, float))", throwing = "throwable")
     //public void f3(JoinPoint joinPoint) {
-    public void showExceptionEndLog(JoinPoint joinPoint) {
+    public void showExceptionEndLog(JoinPoint joinPoint, Object throwable) {
         Signature signature = joinPoint.getSignature();
         System.out.println("切面类showExceptionEndLog()-方法执行异常-日志-方法名-" + signature.getName());
+        System.out.println("抛出的异常为：" + throwable.toString());
     }
 
     //最终通知，即把f4方法切入到目标方法执行后(不管是否发生异常，都要执行，即finally{})

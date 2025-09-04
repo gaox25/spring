@@ -16,4 +16,9 @@ public class SmartDog implements SmartAnimalable{
     public float getSub(float i, float j) {
         return 0;
     }
+
+    @Override
+    public float getMul(float i, float j) {
+        return i * j;
+    }
 }
