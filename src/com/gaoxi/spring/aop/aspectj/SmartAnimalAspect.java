@@ -11,6 +11,13 @@ import java.lang.reflect.Method;
 @Aspect //表示是一个切面类，底层切面编程的支撑是动态代理+反射+动态绑定
 @Component //会将SmartAnimalAspect注入Spring容器
 public class SmartAnimalAspect {
+
+    //定义一个切入点，在后面使用时可以直接引用，这样就提高了复用性
+    @Pointcut(value = "execution(public float com.gaoxi.spring.aop.aspectj.SmartDog.getSum(float, float))")
+    public void myPointCut() {
+
+    }
+
     //希望将f1方法切入到SmartDog.getSum前执行-前置通知
     /*
      解读：1.@Before表示是一个前置通知，表示f1()会切入目标对象执行方法getSum()前执行
@@ -21,13 +28,16 @@ public class SmartAnimalAspect {
      */
     //@Before(value = "execution(public float com.gaoxi.spring.aop.aspectj.SmartDog.getSum(float, float))")
     //切入表达式的模糊配置
-    @Before(value = "execution(* com.gaoxi.spring.aop.aspectj.SmartDog.*(..))")
+    //@Before(value = "execution(* com.gaoxi.spring.aop.aspectj.SmartDog.*(..))")
+    //这里使用定义好的切入点
+    @Before(value = "myPointCut()")
     //表示所有访问权限，所有包下的所有类的所有方法，都会被执行该前置通知方法
     //@Before(value = "execution(* *.*(..))")
     //public void f1(JoinPoint joinPoint) {
     //使用showBeginLog比较适合
     public void showBeginLog(JoinPoint joinPoint) {
         //通过连接点对象，来获取方法签名
+        System.out.println("使用myPointCut()");
         System.out.println("切面类SmartAnimalAspect方法showBeginLog()");
         System.out.println("方法签名 = " + joinPoint.getSignature());
         System.out.println("方法参数 = " + joinPoint.getArgs());
@@ -41,7 +51,9 @@ public class SmartAnimalAspect {
      3.同时在切入方法的形参中增加Object res
      4.注意returning = "res" 需要和Object res中的名称保持一致
      */
-    @AfterReturning(value = "execution(public float com.gaoxi.spring.aop.aspectj.SmartDog.getSum(float, float))", returning = "res")
+    //@AfterReturning(value = "execution(public float com.gaoxi.spring.aop.aspectj.SmartDog.getSum(float, float))", returning = "res")
+    //直接使用切入点表达式
+    @AfterReturning(value = "myPointCut()", returning = "res")
     //public void f2(JoinPoint joinPoint) {
     public void showSuccessEndLog(JoinPoint joinPoint, Object res) {
         Signature signature = joinPoint.getSignature();
@@ -50,7 +62,9 @@ public class SmartAnimalAspect {
     }
 
     //异常通知，即把f3()方法切入到目标对象方法执行发生异常的catch{}
-    @AfterThrowing(value = "execution(public float com.gaoxi.spring.aop.aspectj.SmartDog.getSum(float, float))", throwing = "throwable")
+    //@AfterThrowing(value = "execution(public float com.gaoxi.spring.aop.aspectj.SmartDog.getSum(float, float))", throwing = "throwable")
+    //直接使用切入点表达式
+    @AfterThrowing(value = "myPointCut()", throwing = "throwable")
     //public void f3(JoinPoint joinPoint) {
     public void showExceptionEndLog(JoinPoint joinPoint, Object throwable) {
         Signature signature = joinPoint.getSignature();
@@ -59,7 +73,9 @@ public class SmartAnimalAspect {
     }
 
     //最终通知，即把f4方法切入到目标方法执行后(不管是否发生异常，都要执行，即finally{})
-    @After(value = "execution(public float com.gaoxi.spring.aop.aspectj.SmartDog.getSum(float, float))")
+    //@After(value = "execution(public float com.gaoxi.spring.aop.aspectj.SmartDog.getSum(float, float))")
+    //直接使用切入点表达式
+    @After(value = "myPointCut()")
     //public void f4(JoinPoint joinPoint) {
     public void showFinallyEndLog(JoinPoint joinPoint) {
         Signature signature = joinPoint.getSignature();
